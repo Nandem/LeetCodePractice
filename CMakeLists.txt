@@ -3,4 +3,4 @@ project(LetcodePractice)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(LetcodePractice 2018/Array/RemoveDuplicates.cpp)
+add_executable(LetcodePractice 2018/Array/ArraySolution.cpp Utils/CommonUtil.h)
