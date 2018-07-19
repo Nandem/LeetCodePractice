@@ -64,7 +64,7 @@ public:
     }
 
     template<class T>
-    static int length(T& arr)
+    static unsigned int length(T& arr)
     {
         //cout << sizeof(arr[0]) << endl;
         //cout << sizeof(arr) << endl;
