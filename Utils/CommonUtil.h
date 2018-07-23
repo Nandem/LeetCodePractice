@@ -6,6 +6,8 @@
 #define LETCODEPRACTICE_COMMONUTIL_H
 
 #include <vector>
+#include <cstdint>
+#include <iostream>
 
 class CommonUtil
 {
@@ -59,6 +61,32 @@ public:
             {
                 min = v[i];
                 index = i;
+            }
+        }
+    }
+
+    static void print(std::vector<int> & v)
+    {
+        for(int vn : v)
+        {
+            std::cout << vn << ' ';
+        }
+
+        std::cout << std::endl;
+    }
+
+    static void sort(std::vector<int> & v)
+    {
+        for(int i = 0; i < v.size(); i++)
+        {
+            for(int j = i; j < v.size(); j++)
+            {
+                if(v[j] < v[i])
+                {
+                    int tem = v[i];
+                    v[i] = v[j];
+                    v[j] = tem;
+                }
             }
         }
     }

@@ -15,6 +15,7 @@ public:
      */
     int removeDuplicates(vector<int> &nums)
     {
+        if (nums.empty()) return 0;
         for (int i = 0; i < nums.size(); ++i)
         {
             for (int j = nums.size() - 1; j > i; --j)
@@ -43,6 +44,8 @@ public:
      */
     int maxProfit(vector<int> &prices)
     {
+        if (prices.empty()) return 0;
+
         int sum = 0;
         for (int i = 1; i < prices.size(); i++)
         {
@@ -62,19 +65,92 @@ public:
      */
     void rotate(vector<int> &nums, int k)
     {
-        for (int i : nums)
-        {
-            cout << i << '\0';
-        }
-        cout << endl;
+        if (nums.empty()) return;
+
+        CommonUtil::print(nums);
+
         if (nums.empty() || (k %= nums.size()) == 0) return;
         int n = nums.size();
         reverse(nums.begin(), nums.begin() + n - k);
         reverse(nums.begin() + n - k, nums.end());
         reverse(nums.begin(), nums.end());
-        for (int i : nums)
+
+        CommonUtil::print(nums);
+    }
+
+    /**
+     * 题目：存在重复
+     * 描述：给定一个整数数组，判断是否存在重复元素。
+     * 注意：需要判空，存在传入数组为空的情况
+     * @param nums
+     * @return
+     */
+    bool containsDuplicate(vector<int> &nums)
+    {
+        if (nums.empty()) return false;
+
+        sort(nums.begin(), nums.end());
+
+        for (int i = 0; i < nums.size() - 1; i++)
         {
-            cout << i << '\0';
+            if (nums[i + 1] == nums[i])
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 题目：只出现一次的数字（给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。）
+     * 描述：你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？
+     * 巧妙：
+     * int singleNumber(vector<int> &nums)
+     * {
+     *     int ret=0;//异或计算
+     *    for(int i=0;i<nums.size();i++)
+     *    {
+     *        ret^=nums[i];
+     *    }
+     *    return ret;
+     * }
+     *
+     * @param nums
+     * @return
+     */
+    int singleNumber(vector<int> &nums)
+    {
+        if (nums.empty()) return 0;
+
+        sort(nums.begin(), nums.end());
+
+        CommonUtil::print(nums);
+
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if (i - 1 < 0)
+            {
+                if (nums[i + 1] != nums[i])
+                {
+                    return nums[i];
+                }
+            }
+            else if (i + 1 > nums.size())
+            {
+                if (nums[i - 1] != nums[i])
+                {
+                    return nums[i];
+                }
+            }
+            else if (nums[i - 1] != nums[i] && nums[i] != nums[i + 1])
+            {
+                return nums[i];
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 };
@@ -98,11 +174,21 @@ main()
     cout << solution->maxProfit(prices);
     //*/
 
+    /*/
     int k = 6;
     int arrToBeRotated[] = {1,2,3,4,5,6,7,8};
-    vector<int> av;
+    vector<int> arv;
     av.reserve(CommonUtil::length(arrToBeRotated));
-    av.insert(av.begin(), &arrToBeRotated[0], &arrToBeRotated[CommonUtil::length(arrToBeRotated)]);
-    solution->rotate(av, k);
+    av.insert(arv.begin(), &arrToBeRotated[0], &arrToBeRotated[CommonUtil::length(arrToBeRotated)]);
+    solution->rotate(arv, k);
+    //*/
+
+    int arrToBeJudgeDuplicate[] = {4,1,2,1,2};
+    vector<int> ajd;
+    ajd.reserve(CommonUtil::length(arrToBeJudgeDuplicate));
+    ajd.insert(ajd.begin(), &arrToBeJudgeDuplicate[0],
+               &arrToBeJudgeDuplicate[CommonUtil::length(arrToBeJudgeDuplicate)]);
+    cout << boolalpha << solution->singleNumber(ajd);
+
     return 0;
 }
