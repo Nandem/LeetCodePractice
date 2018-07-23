@@ -91,6 +91,15 @@ public:
         }
     }
 
+    static std::vector<int> getVector(int arr[], int length)
+    {
+        std::vector<int> v;
+        v.reserve(length);
+        v.insert(v.begin(), &arr[0], &arr[length]);
+
+        return v;
+    }
+
     template<class T>
     static unsigned int length(T& arr)
     {

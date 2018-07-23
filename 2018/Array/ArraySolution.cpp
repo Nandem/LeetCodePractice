@@ -15,10 +15,13 @@ public:
      */
     int removeDuplicates(vector<int> &nums)
     {
-        if (nums.empty()) return 0;
-        for (int i = 0; i < nums.size(); ++i)
+        if (nums.empty())
+        { return 0; }
+        for (int i = 0; i < nums.size(); ++i
+                )
         {
-            for (int j = nums.size() - 1; j > i; --j)
+            for (int j = nums.size() - 1; j > i; --j
+                    )
             {
                 if (nums[i] == nums[j])
                 {
@@ -28,7 +31,8 @@ public:
         }
 
         vector<int>::iterator it;
-        for (it = nums.begin(); it != nums.end(); it++)
+        for (it = nums.begin(); it != nums.end(); it++
+                )
         {
             cout << *it << '\0';
         }
@@ -44,10 +48,12 @@ public:
      */
     int maxProfit(vector<int> &prices)
     {
-        if (prices.empty()) return 0;
+        if (prices.empty())
+        { return 0; }
 
         int sum = 0;
-        for (int i = 1; i < prices.size(); i++)
+        for (int i = 1; i < prices.size(); i++
+                )
         {
             if (prices[i] > prices[i - 1])
             {
@@ -65,11 +71,13 @@ public:
      */
     void rotate(vector<int> &nums, int k)
     {
-        if (nums.empty()) return;
+        if (nums.empty())
+        { return; }
 
         CommonUtil::print(nums);
 
-        if (nums.empty() || (k %= nums.size()) == 0) return;
+        if (nums.empty() || (k %= nums.size()) == 0)
+        { return; }
         int n = nums.size();
         reverse(nums.begin(), nums.begin() + n - k);
         reverse(nums.begin() + n - k, nums.end());
@@ -87,11 +95,13 @@ public:
      */
     bool containsDuplicate(vector<int> &nums)
     {
-        if (nums.empty()) return false;
+        if (nums.empty())
+        { return false; }
 
         sort(nums.begin(), nums.end());
 
-        for (int i = 0; i < nums.size() - 1; i++)
+        for (int i = 0; i < nums.size() - 1; i++
+                )
         {
             if (nums[i + 1] == nums[i])
             {
@@ -121,13 +131,15 @@ public:
      */
     int singleNumber(vector<int> &nums)
     {
-        if (nums.empty()) return 0;
+        if (nums.empty())
+        { return 0; }
 
         sort(nums.begin(), nums.end());
 
         CommonUtil::print(nums);
 
-        for(int i = 0; i < nums.size(); i++)
+        for (int i = 0; i < nums.size(); i++
+                )
         {
             if (i - 1 < 0)
             {
@@ -149,6 +161,33 @@ public:
             }
         }
     }
+
+    /**
+     * 题目：两个数组的交集 II
+     * 描述：给定两个数组，写一个方法来计算它们的交集。
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    vector<int> intersect(vector<int> &nums1, vector<int> &nums2)
+    {
+        vector<int> result;
+
+        for (int n2 : nums2)
+        {
+            for (int i = 0; i < nums1.size(); i++)
+            {
+                if (nums1[i] == n2)
+                {
+                    result.push_back(n2);
+                    nums1.erase(nums1.begin() + i);
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
 };
 
 int
@@ -156,13 +195,14 @@ main()
 {
     auto *solution = new Solution();
 
-    int arrToBeJudgeDuplicate[] = {4,1,2,1,2};
-    vector<int> ajd;
-    ajd.reserve(CommonUtil::length(arrToBeJudgeDuplicate));
-    ajd.insert(ajd.begin(), &arrToBeJudgeDuplicate[0],
-               &arrToBeJudgeDuplicate[CommonUtil::length(arrToBeJudgeDuplicate)]);
+    int arr1[] = {1, 2, 2, 1};
+    int arr2[] = {2, 2};
+    vector<int> v2 = CommonUtil::getVector(arr1, CommonUtil::length(arr1));
+    vector<int> v1 = CommonUtil::getVector(arr2, CommonUtil::length(arr2));;
 
-    cout << solution->singleNumber(ajd);
+    vector<int> tem = solution->intersect(v1, v2);
+
+    cout << tem.size();
 
     return 0;
 }
