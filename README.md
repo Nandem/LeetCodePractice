@@ -1,4 +1,4 @@
-# LetCodePractice
+# LeetCodePractice
 ### 数组
 |题目|时间|备注| 
 |:---:|:----:|:----:|
