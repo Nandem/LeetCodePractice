@@ -166,7 +166,7 @@ main()
     ajd.insert(ajd.begin(), &arrToBeJudgeDuplicate[0],
                &arrToBeJudgeDuplicate[CommonUtil::length(arrToBeJudgeDuplicate)]);
 
-    cout << boolalpha << solution->singleNumber(ajd);
+    cout << solution->singleNumber(ajd);
 
     return 0;
 }
