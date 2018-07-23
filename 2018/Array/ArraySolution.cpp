@@ -147,10 +147,6 @@ public:
             {
                 return nums[i];
             }
-            else
-            {
-                return 0;
-            }
         }
     }
 };
