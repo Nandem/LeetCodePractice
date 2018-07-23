@@ -160,34 +160,12 @@ main()
 {
     auto *solution = new Solution();
 
-    /*/
-    vector<int> nums;
-    nums.push_back(1);
-    nums.push_back(1);
-    nums.push_back(2);
-    solution->removeDuplicates(nums);
-    //*/
-
-    /*/
-    int pricesArr[] = {7, 1, 5, 3, 6, 4};
-    vector<int> prices(&pricesArr[0], &pricesArr[CommonUtil::length(pricesArr)]);
-    cout << solution->maxProfit(prices);
-    //*/
-
-    /*/
-    int k = 6;
-    int arrToBeRotated[] = {1,2,3,4,5,6,7,8};
-    vector<int> arv;
-    av.reserve(CommonUtil::length(arrToBeRotated));
-    av.insert(arv.begin(), &arrToBeRotated[0], &arrToBeRotated[CommonUtil::length(arrToBeRotated)]);
-    solution->rotate(arv, k);
-    //*/
-
     int arrToBeJudgeDuplicate[] = {4,1,2,1,2};
     vector<int> ajd;
     ajd.reserve(CommonUtil::length(arrToBeJudgeDuplicate));
     ajd.insert(ajd.begin(), &arrToBeJudgeDuplicate[0],
                &arrToBeJudgeDuplicate[CommonUtil::length(arrToBeJudgeDuplicate)]);
+
     cout << boolalpha << solution->singleNumber(ajd);
 
     return 0;
