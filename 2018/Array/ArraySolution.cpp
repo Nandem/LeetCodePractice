@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 #include "../../Utils/CommonUtil.h"
 
 using namespace std;
@@ -15,13 +16,10 @@ public:
      */
     int removeDuplicates(vector<int> &nums)
     {
-        if (nums.empty())
-        { return 0; }
-        for (int i = 0; i < nums.size(); ++i
-                )
+        if (nums.empty()) return 0;
+        for (int i = 0; i < nums.size(); ++i)
         {
-            for (int j = nums.size() - 1; j > i; --j
-                    )
+            for (int j = nums.size() - 1; j > i; --j)
             {
                 if (nums[i] == nums[j])
                 {
@@ -31,8 +29,7 @@ public:
         }
 
         vector<int>::iterator it;
-        for (it = nums.begin(); it != nums.end(); it++
-                )
+        for (it = nums.begin(); it != nums.end(); it++)
         {
             cout << *it << '\0';
         }
@@ -48,12 +45,10 @@ public:
      */
     int maxProfit(vector<int> &prices)
     {
-        if (prices.empty())
-        { return 0; }
+        if (prices.empty()) return 0;
 
         int sum = 0;
-        for (int i = 1; i < prices.size(); i++
-                )
+        for (int i = 1; i < prices.size(); i++)
         {
             if (prices[i] > prices[i - 1])
             {
@@ -71,13 +66,11 @@ public:
      */
     void rotate(vector<int> &nums, int k)
     {
-        if (nums.empty())
-        { return; }
+        if (nums.empty()) return;
 
         CommonUtil::print(nums);
 
-        if (nums.empty() || (k %= nums.size()) == 0)
-        { return; }
+        if (nums.empty() || (k %= nums.size()) == 0) return;
         int n = nums.size();
         reverse(nums.begin(), nums.begin() + n - k);
         reverse(nums.begin() + n - k, nums.end());
@@ -95,13 +88,11 @@ public:
      */
     bool containsDuplicate(vector<int> &nums)
     {
-        if (nums.empty())
-        { return false; }
+        if (nums.empty()) return false;
 
         sort(nums.begin(), nums.end());
 
-        for (int i = 0; i < nums.size() - 1; i++
-                )
+        for (int i = 0; i < nums.size() - 1; i++)
         {
             if (nums[i + 1] == nums[i])
             {
@@ -131,15 +122,13 @@ public:
      */
     int singleNumber(vector<int> &nums)
     {
-        if (nums.empty())
-        { return 0; }
+        if (nums.empty()) return 0;
 
         sort(nums.begin(), nums.end());
 
         CommonUtil::print(nums);
 
-        for (int i = 0; i < nums.size(); i++
-                )
+        for (int i = 0; i < nums.size(); i++)
         {
             if (i - 1 < 0)
             {
@@ -188,6 +177,30 @@ public:
 
         return result;
     }
+
+    /**
+     * 题目：加一
+     * 描述：给定一个非负整数组成的非空数组，在该数的基础上加一，返回一个新的数组。 最高位数字存放在数组的首位， 数组中每个元素只存储一个数字。
+     * 你可以假设除了整数 0 之外，这个整数不会以零开头。
+     * 巧妙：搞清楚要不要进位是比较好的方案，操作的步骤也少。如下
+     * @param digits
+     * @return
+     */
+    vector<int> plusOne(vector<int> &digits)
+    {
+        int n = digits.size();
+        for (int i = n - 1; i >= 0; --i)
+        {
+            if (digits[i] == 9) digits[i] = 0;
+            else
+            {
+                digits[i] += 1;
+                return digits;
+            }
+        }
+        if (digits.front() == 0) digits.insert(digits.begin(), 1);
+        return digits;
+    }
 };
 
 int
@@ -195,14 +208,12 @@ main()
 {
     auto *solution = new Solution();
 
-    int arr1[] = {1, 2, 2, 1};
+    int arr1[] = {6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3};
     int arr2[] = {2, 2};
-    vector<int> v2 = CommonUtil::getVector(arr1, CommonUtil::length(arr1));
-    vector<int> v1 = CommonUtil::getVector(arr2, CommonUtil::length(arr2));;
+    vector<int> v1 = CommonUtil::getVector(arr1, CommonUtil::length(arr1));
+    vector<int> v2 = CommonUtil::getVector(arr2, CommonUtil::length(arr2));;
 
-    vector<int> tem = solution->intersect(v1, v2);
-
-    cout << tem.size();
+    solution->plusOne(v1).size();
 
     return 0;
 }
