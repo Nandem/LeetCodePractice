@@ -201,19 +201,72 @@ public:
         if (digits.front() == 0) digits.insert(digits.begin(), 1);
         return digits;
     }
+
+    /**
+     * 题目：移动零
+     * 描述：给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+     * 说明：必须在原数组上操作，不能拷贝额外的数组。 尽量减少操作次数。
+     * 下面这个挺好：
+     * void moveZeroes(vector<int> &nums)
+     * {
+     *     int j = 0;
+     *     for (int i = 0; i < nums.size(); ++i)
+     *     {
+     *         if (nums[i] != 0)
+     *         {
+     *             nums[j] = nums[i];
+     *             ++j;
+     *         }
+     *     }
+     *     for (; j < nums.size(); ++j)
+     *     {
+     *         nums[j] = 0;
+     *     }
+     * }
+     * @param nums
+     */
+    void moveZeroes(vector<int> &nums)
+    {
+        int breakIndex = 0;
+        for (int n : nums)
+        {
+            if (n == 0) breakIndex++;
+        }
+
+        for (int i = 0; i < nums.size();)
+        {
+            if (nums[i] == 0)
+            {
+                for (int j = i; j < nums.size() - 1; ++j)
+                {
+                    nums[j] = nums[j + 1];
+                }
+                nums[nums.size() - 1] = 0;
+            }
+
+            if (i == (nums.size() - breakIndex)) break;
+
+            if (nums[i] == 0)
+            {
+                continue;
+            }
+            i++;
+        }
+
+        CommonUtil::print(nums);
+    }
 };
 
-int
-main()
+int main()
 {
     auto *solution = new Solution();
 
-    int arr1[] = {6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3};
-    int arr2[] = {2, 2};
+    int arr1[] = {5, 3, 9, 0, 0, 0, 0, 1, 0, 0, 7, 0, 5, 5, 4, 3};
+    int arr2[] = {0, 0, 1};
     vector<int> v1 = CommonUtil::getVector(arr1, CommonUtil::length(arr1));
     vector<int> v2 = CommonUtil::getVector(arr2, CommonUtil::length(arr2));;
 
-    solution->plusOne(v1).size();
+    solution->moveZeroes(v1);
 
     return 0;
 }
