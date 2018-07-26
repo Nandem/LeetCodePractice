@@ -255,6 +255,49 @@ public:
 
         CommonUtil::print(nums);
     }
+
+    /**
+     * 问题：两数之和
+     * 描述：给定一个整数数组和一个目标值，找出数组中和为目标值的两个数下标。你可以假设每个输入只对应一种答案，且同样的元素不能被重复利用。
+     * 下面使用map辅助，一遍哈希表：
+     * vector<int> twoSum(vector<int> &nums, int target)
+     * {
+     *     unordered_map<int, int> m;
+     *     for (int i = 0; i < nums.size(); ++i)
+     *     {
+     *         if (m.count(target - nums[i]))
+     *         {
+     *             return {i, m[target - nums[i]]};
+     *         }
+     *         m[nums[i]] = i;
+     *     }
+     *     return {};
+     * }
+     * @param nums
+     * @param target
+     * @return
+     */
+    vector<int> twoSum(vector<int> &nums, int target)
+    {
+        vector<int> result;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            int dv = target - nums[i];
+
+            //if(dv < 0) continue;//测试用例中有负数，此行需要注释掉
+
+            for(int j = i + 1; j < nums.size(); j++)
+            {
+                if(dv == nums[j])
+                {
+                    result.push_back(i);
+                    result.push_back(j);
+                }
+            }
+        }
+
+        return result;
+    }
 };
 
 int main()
@@ -262,11 +305,11 @@ int main()
     auto *solution = new Solution();
 
     int arr1[] = {5, 3, 9, 0, 0, 0, 0, 1, 0, 0, 7, 0, 5, 5, 4, 3};
-    int arr2[] = {0, 0, 1};
+    int arr2[] = {3,2,4};
     vector<int> v1 = CommonUtil::getVector(arr1, CommonUtil::length(arr1));
     vector<int> v2 = CommonUtil::getVector(arr2, CommonUtil::length(arr2));;
 
-    solution->moveZeroes(v1);
+    solution->twoSum(v2, 6);
 
     return 0;
 }
