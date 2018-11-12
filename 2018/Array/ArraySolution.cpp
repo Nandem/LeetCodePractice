@@ -9,6 +9,11 @@ using namespace std;
 class Solution
 {
 public:
+    ~Solution()
+    {
+        cout << "Solution销毁" << endl;
+    }
+
     /**
      * 题目：删除已排序数组重复元素
      * @param nums 原始数组
@@ -280,36 +285,175 @@ public:
     vector<int> twoSum(vector<int> &nums, int target)
     {
         vector<int> result;
-        for(int i = 0; i < nums.size(); i++)
+        for (int i = 0; i < nums.size(); i++)
         {
             int dv = target - nums[i];
 
             //if(dv < 0) continue;//测试用例中有负数，此行需要注释掉
 
-            for(int j = i + 1; j < nums.size(); j++)
+            for (int j = i + 1; j < nums.size(); j++)
             {
-                if(dv == nums[j])
+                if (dv == nums[j])
                 {
                     result.push_back(i);
                     result.push_back(j);
                 }
             }
         }
-
         return result;
     }
+
+    /**
+     * 问题：有效的数独
+     * 描述：判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
+     *       1.数字 1-9 在每一行只能出现一次。
+     *       2.数字 1-9 在每一列只能出现一次。
+     *       3.数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
+     * 说明：
+     *      一个有效的数独（部分已被填充）不一定是可解的。
+     *      只需要根据以上规则，验证已经填入的数字是否有效即可。
+     *      给定数独序列只包含数字 1-9 和字符 '.' 。
+     *      给定数独永远是 9x9 形式的。
+     * @param board
+     * @return
+     */
+    bool isValidSudoku(vector<vector<char>> &board)
+    {
+        if (board.empty() || board[0].empty()) return false;
+        unsigned int m = board.size(), n = board[0].size();
+        vector<vector<bool>> rowFlag(m, vector<bool>(n, false));
+        vector<vector<bool>> colFlag(m, vector<bool>(n, false));
+        vector<vector<bool>> cellFlag(m, vector<bool>(n, false));
+        for (int i = 0; i < m; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                if (board[i][j] >= '1' && board[i][j] <= '9')
+                {
+                    int c = board[i][j] - '1';
+                    if (rowFlag[i][c] || colFlag[c][j] || cellFlag[3 * (i / 3) + j / 3][c]) return false;
+                    rowFlag[i][c] = true;
+                    colFlag[c][j] = true;
+                    cellFlag[3 * (i / 3) + j / 3][c] = true;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 题目：旋转图像
+     * 描述：给定一个 n × n 的二维矩阵表示一个图像。
+     *       将图像顺时针旋转 90 度。
+     * 说明：你必须在原地旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要使用另一个矩阵来旋转图像。
+     * @param matrix
+     */
+    void rotate(vector<vector<int> > &matrix)
+    {
+        CommonUtil::print(matrix);
+        int n = matrix.size();
+        for (int i = 0; i < n / 2; ++i)
+        {
+            for (int j = i; j < n - 1 - i; ++j)
+            {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[n - 1 - j][i];
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+                matrix[j][n - 1 - i] = tmp;
+            }
+        }
+        CommonUtil::print(matrix);
+    }
+
+    /**
+     * 题目：寻找数组的中心索引
+     * 描述：给定一个整数类型的数组 nums，请编写一个能够返回数组“中心索引”的方法。
+     *       我们是这样定义数组中心索引的：数组中心索引的左侧所有元素相加的和等于右侧所有元素相加的和。
+     *       如果数组不存在中心索引，那么我们应该返回 -1。如果数组有多个中心索引，那么我们应该返回最靠近左边的那一个。
+     * 说明：nums 的长度范围为 [0, 10000]。
+     *       任何一个 nums[i] 将会是一个范围在 [-1000, 1000]的整数。
+     * @param matrix
+     */
+    int pivotIndex(vector<int> &nums)
+    {
+        int sum = 0;
+        int sumLeft = 0;
+        int sumRight = 0;
+        for (auto num : nums)
+        {
+            sum += num;
+        }
+
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            if(i == 0)
+            {
+                sumLeft = 0;
+            }
+            else
+            {
+                sumLeft += nums[i - 1];
+            }
+
+            sumRight = sum - sumLeft - nums[i];
+
+            if(sumLeft == sumRight)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * 题目：至少是其他数字两倍的最大数
+     * 描述：在一个给定的数组nums中，总是存在一个最大元素 。
+     *       查找数组中的最大元素是否至少是数组中每个其他数字的两倍。
+     *       如果是，则返回最大元素的索引，否则返回-1。
+     * 说明：nums 的长度范围在[1, 50].
+     *       每个 nums[i] 的整数范围在 [0, 99].
+     * @param nums
+     * @return
+     */
+    int dominantIndex(vector<int>& nums) {
+        int maxNum = 0;
+        int maxNumIndex = 0;
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            for (int j = 0; j < nums.size(); ++j)
+            {
+                if(nums[i] >= nums[j])
+                {
+                    int tem = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = tem;
+
+                }
+
+                if(nums[j] > maxNum)
+                {
+                    maxNum = nums[j];
+                    maxNumIndex = j;
+
+                    std::cout << "maxNumIndex: " << maxNumIndex << std::endl;
+                }
+            }
+        }
+
+        for (auto n : nums)
+        {
+            std::cout << n ;
+        }
+
+        std::cout << std::endl;
+
+        if(nums[0] >= 2 * nums[1])
+        {
+            return maxNumIndex;
+        }
+
+        return -1;
+    }
 };
-
-int main()
-{
-    auto *solution = new Solution();
-
-    int arr1[] = {5, 3, 9, 0, 0, 0, 0, 1, 0, 0, 7, 0, 5, 5, 4, 3};
-    int arr2[] = {3,2,4};
-    vector<int> v1 = CommonUtil::getVector(arr1, CommonUtil::length(arr1));
-    vector<int> v2 = CommonUtil::getVector(arr2, CommonUtil::length(arr2));;
-
-    solution->twoSum(v2, 6);
-
-    return 0;
-}
